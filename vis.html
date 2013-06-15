@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Linux Dataflow</title>
+    <script type="text/javascript" src="raphael-min.js"></script>
+    <script type="text/javascript" src="data.js"></script>
+  </head>
+  <body>
+    <script type="text/javascript">
+      /* XXX */
+      var paper = Raphael(0, 0, 6000, 6000);
+
+      var nr_defs = 0;
+      var nr_subsys = 0;
+      for (subsys in data) {
+        nr_subsys = nr_subsys + 1;
+        nr_defs = nr_defs + data[subsys].length;
+      }
+
+      /* Generate subsystem nodes. */
+      var max_width = 10000;
+      var step = 1.0 / (nr_subsys + 2);
+      var cur_hue = step;
+      for (subsys in data) {
+        var vpos = 1000;
+        var hpos = cur_hue * max_width;
+        var radius = 2000 * data[subsys].length / nr_defs;
+        var color = Raphael.hsb(cur_hue, 0.95, 0.75);
+        var circle = paper.circle(hpos, vpos, radius);
+        circle.attr('fill', color);
+        circle.attr('stroke', '#fff');
+        var label = paper.text(hpos, vpos, subsys);
+        label.attr('fill', '#fff');
+        cur_hue = cur_hue + step;
+      }
+
+
+
+      console.log(data);
+    </script>
+  </body>
+</html>
+
