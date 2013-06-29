@@ -32,30 +32,33 @@ var add_subsystem = function(name, defs) {
 
   /* Collect popular structs and arrange them around the circle. */
   for (var i = 0; i < nboxes; i++) {
-    var bw = 134
+    var bw = 144
       , bh = 36
       , bx = (x + (oradius * Math.cos(phi))) - (bw / 2)
       , by = (y + (oradius * Math.sin(phi))) - (bh / 2)
       , box = paper.rect(bx, by, bw, bh, 10)
       , structname = defs[i][0]
       , struct = paper.text(bx + (bw / 2), by + (bh / 2), structname)
+      , txtsize = 12
       ;
-
-    if (struct.getBBox().width > (7.0 * bw / 12.0)) {
-      nboxes = nboxes + 1;
-      box.remove();
-      struct.remove();
-      continue;
-    }
 
     box.attr('fill', color);
     struct.attr('font-family', 'monospace');
-    struct.attr('font-size', '12px');
+    struct.attr('font-size', txtsize + 'px');
     struct.attr('fill', '#eee');
     struct.attr('href', 'http://lxr.free-electrons.com/ident?i=' + structname);
 
+    while (struct.getBBox().width > (7.0 * bw / 8.0)) {
+      txtsize = txtsize - .1;
+      struct.attr('font-size', txtsize + 'px');
+    }
+
     for (var j = 0; j < 3; j++) {
       /* Draw edges to the subsystems making the most use of this struct. */
+      // var cmd = "M" + bx + " " + by
+      // var p = paper.path("S " + bx + " " + by + " " + cw + " " + ch);
+      // p.attr('fill', '#000');
+      // p.attr('stroke', 'none');
     }
 
     phi = phi + phi_step;
