@@ -3,5 +3,6 @@
 # Cache the source tree. Good for experimentation.
 
 mkdir -p /mnt/ram
-mount -t ramfs -o ramfs /mnt/ram 
+mount -t ramfs -o size=1G ramfs /mnt/ram 
 cp -r /home/vk/work/cs194-24/labs/cs194-gd/linux /mnt/ram/linux
+rm /mnt/ram/linux/tags

@@ -6,7 +6,9 @@ for line in $(cat usage+defs.txt); do
 	if [[ $line == *\+ ]]; then
 		echo $line
 		declare -A counts
-		for subsys in $(grep $(echo $line | cut -d : -f 2 | sed "s/+//") usage+defs.txt | cut -d : -f 1); do
+
+		searchstr=$(echo $line | cut -d : -f 2 | sed 's/+//')
+		for subsys in $(grep -E ':'$searchstr'$' usage+defs.txt | cut -d : -f 1); do
 			counts[$subsys]=$((counts[$subsys] + 1))
 		done
 		for subsys in "${!counts[@]}"; do
